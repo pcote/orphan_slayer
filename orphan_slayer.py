@@ -28,14 +28,14 @@ bl_info = {
     'location': 'VIEW 3D -> TOOLS',
     'description': 'Deletes objects from a scene and from the bpy.data modules',
     'warning': '', # used for warning icon and text in addons panel
-    'category': 'General'}
+    'category': 'System'}
 
 import bpy, random, time
 from pdb import set_trace
 
     
 class DeleteSceneObsOp(bpy.types.Operator):
-    '''.'''
+    '''Remove all objects from the scene..'''
     bl_idname = "ba.delete_scene_obs"
     bl_label = "Delete Scene Objects"
 
@@ -46,18 +46,23 @@ class DeleteSceneObsOp(bpy.types.Operator):
 
 
 class DeleteOrphansOp(bpy.types.Operator):
-    
+    '''Remove all orphaned objects of a selected type from the project.'''
     bl_idname="ba.delete_data_obs"
     bl_label="Delete Orphans"
     
     def execute(self, context):
-        target_coll = eval("bpy.data." + context.scene.mod_list)
-        print("chosen target collection: " + str(target_coll))
-        print( "size of target collection: %d" % len(target_coll) )
+        target = context.scene.mod_list
+        target_coll = eval("bpy.data." + target)
+        
+        num_deleted = 0
+        
         for item in target_coll:
             if item.users == 0:
                 target_coll.remove(item)
+                num_deleted += 1
         
+        msg = "Removed %d orphaned %s objects" % (num_deleted, target)
+        self.report( { 'INFO' }, msg  )
         return {'FINISHED'}
     
 
@@ -70,12 +75,13 @@ class OrphanSlayerPanel( bpy.types.Panel ):
     
     def draw( self, context ):
         scn = context.scene
-        
         layout = self.layout
-        col = layout.column()
-        layout.column().prop(scn, "mod_list")
-        col.operator("ba.delete_scene_obs")
-        col.operator("ba.delete_data_obs")
+        new_col = self.layout.column
+        
+        new_col().column().prop(scn, "mod_list")
+        new_col().column().operator("ba.delete_data_obs")
+        new_col().separator()
+        new_col().column().operator("ba.delete_scene_obs")
     
 
 def register():
@@ -92,7 +98,7 @@ def register():
                  tuple(["textures"]*3),]
     
     
-    bpy.types.Scene.mod_list = bpy.props.EnumProperty(name="Orphan Target", 
+    bpy.types.Scene.mod_list = bpy.props.EnumProperty(name="Target", 
                                                         items=mod_data, 
                                                         description="Module choice made for orphan deletion")
     bpy.utils.register_class(DeleteSceneObsOp)
