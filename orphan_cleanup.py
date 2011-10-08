@@ -33,18 +33,6 @@ bl_info = {
 import bpy, random, time
 from pdb import set_trace
 
-    
-class DeleteSceneObsOp(bpy.types.Operator):
-    '''Remove all objects from the scene..'''
-    bl_idname = "ba.delete_scene_obs"
-    bl_label = "Delete Scene Objects"
-
-    def execute(self, context):
-        for ob in context.scene.objects:
-            context.scene.objects.unlink(ob)
-        return {'FINISHED'}
-
-
 class DeleteOrphansOp(bpy.types.Operator):
     '''Remove all orphaned objects of a selected type from the project.'''
     bl_idname="ba.delete_data_obs"
@@ -67,7 +55,7 @@ class DeleteOrphansOp(bpy.types.Operator):
     
 
 class OrphanCleanupPanel( bpy.types.Panel ):
-    
+    '''Main Panel for Orphan Cleanup script'''
     bl_label = "Orphan Cleanup"
     bl_space_type = "VIEW_3D"
     bl_region_type = "TOOLS"
@@ -80,8 +68,6 @@ class OrphanCleanupPanel( bpy.types.Panel ):
         
         new_col().column().prop(scn, "mod_list")
         new_col().column().operator("ba.delete_data_obs")
-        new_col().separator()
-        new_col().column().operator("ba.delete_scene_obs")
     
 
 def register():
@@ -99,17 +85,16 @@ def register():
     
     
     bpy.types.Scene.mod_list = bpy.props.EnumProperty(name="Target", 
-                                                        items=mod_data, 
-                                                        description="Module choice made for orphan deletion")
-    bpy.utils.register_class(DeleteSceneObsOp)
+                           items=mod_data, 
+                           description="Module choice made for orphan deletion")
+
     bpy.utils.register_class(DeleteOrphansOp)
     bpy.utils.register_class(OrphanCleanupPanel)
     
 
 def unregister():
-    bpy.utils.unregister_class(DeleteSceneObsOp)
-    bpy.utils.unregister_class(DeleteOrphansOp)
     bpy.utils.unregister_class(OrphanCleanupPanel)
+    bpy.utils.unregister_class(DeleteOrphansOp)
 
 
 if __name__ == "__main__":
