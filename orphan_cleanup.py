@@ -27,7 +27,7 @@ bl_info = {
     "api": 35853,
     'location': 'VIEW 3D -> TOOLS',
     'description': 'Deletes unused objects from the bpy.data modules',
-    'warning': 'Know what it is you're deleting. Check datablocks view within outliner if there are any doubts!', # used for warning icon and text in addons panel
+    'warning': 'Know what it is you are deleting. Check datablocks view within outliner if there are any doubts!', # used for warning icon and text in addons panel
     'category': 'System'}
 
 import bpy, random, time
