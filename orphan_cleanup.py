@@ -20,18 +20,30 @@
 # ***** END GPL LICENCE BLOCK *****
 
 bl_info = {
-    'name': 'Orphan Slayer',
+    'name': 'Orphan Cleanup',
     'author': 'Phil Cote, cotejrp1, (http://www.blenderaddons.com)',
     'version': (0,1),
     "blender": (2, 5, 9),
     "api": 35853,
     'location': 'VIEW 3D -> TOOLS',
-    'description': 'Deletes objects from a scene and from the bpy.data modules',
-    'warning': '', # used for warning icon and text in addons panel
+    'description': 'Deletes unused objects from the bpy.data modules',
+    'warning': 'Know what it is you're deleting. Check datablocks view within outliner if there are any doubts!', # used for warning icon and text in addons panel
     'category': 'System'}
 
 import bpy, random, time
 from pdb import set_trace
+
+mod_data = [tuple(["all"]*3), tuple(["actions"]*3), tuple(["armatures"]*3), 
+                 tuple(["cameras"]*3), tuple(["curves"]*3),
+                 tuple(["fonts"]*3), tuple(["grease_pencil"]*3),
+                 tuple(["groups"]*3), tuple(["images"]*3),
+                 tuple(["lamps"]*3), tuple(["lattices"]*3),
+                 tuple(["libraries"]*3), tuple(["materials"]*3),
+                 tuple(["meshes"]*3), tuple(["metaballs"]*3),
+                 tuple(["node_groups"]*3), tuple(["objects"]*3),
+                 tuple(["sounds"]*3), tuple(["texts"]*3), 
+                 tuple(["textures"]*3),]
+
 
 class DeleteOrphansOp(bpy.types.Operator):
     '''Remove all orphaned objects of a selected type from the project.'''
@@ -40,6 +52,9 @@ class DeleteOrphansOp(bpy.types.Operator):
     
     def execute(self, context):
         target = context.scene.mod_list
+        if target == 'all':
+            self.report( {'INFO'}, "all option not yet implemented.")
+            return { 'FINISHED' }
         target_coll = eval("bpy.data." + target)
         
         num_deleted = 0
@@ -71,17 +86,6 @@ class OrphanCleanupPanel( bpy.types.Panel ):
     
 
 def register():
-
-    mod_data = [tuple(["actions"]*3), tuple(["armatures"]*3), 
-                 tuple(["cameras"]*3), tuple(["curves"]*3),
-                 tuple(["fonts"]*3), tuple(["grease_pencil"]*3),
-                 tuple(["groups"]*3), tuple(["images"]*3),
-                 tuple(["lamps"]*3), tuple(["lattices"]*3),
-                 tuple(["libraries"]*3), tuple(["materials"]*3),
-                 tuple(["meshes"]*3), tuple(["metaballs"]*3),
-                 tuple(["node_groups"]*3), tuple(["objects"]*3),
-                 tuple(["sounds"]*3), tuple(["texts"]*3), 
-                 tuple(["textures"]*3),]
     
     
     bpy.types.Scene.mod_list = bpy.props.EnumProperty(name="Target", 
