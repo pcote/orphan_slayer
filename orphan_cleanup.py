@@ -54,8 +54,8 @@ class DeleteOrphansOp(bpy.types.Operator):
         target = context.scene.mod_list
         target_coll = eval("bpy.data." + target)
         
-        num_deleted = len([x for x in target_coll if item.users==0])
-        num_kept = len([x for x in target_coll if item.users==1])
+        num_deleted = len([x for x in target_coll if x.users==0])
+        num_kept = len([x for x in target_coll if x.users==1])
         
         for item in target_coll:
             if item.users == 0:
