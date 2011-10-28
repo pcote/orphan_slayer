@@ -33,7 +33,7 @@ bl_info = {
 import bpy, random, time
 from pdb import set_trace
 
-mod_data = [tuple(["all"]*3), tuple(["actions"]*3), tuple(["armatures"]*3), 
+mod_data = [tuple(["actions"]*3), tuple(["armatures"]*3), 
                  tuple(["cameras"]*3), tuple(["curves"]*3),
                  tuple(["fonts"]*3), tuple(["grease_pencil"]*3),
                  tuple(["groups"]*3), tuple(["images"]*3),
@@ -52,19 +52,17 @@ class DeleteOrphansOp(bpy.types.Operator):
     
     def execute(self, context):
         target = context.scene.mod_list
-        if target == 'all':
-            self.report( {'INFO'}, "all option not yet implemented.")
-            return { 'FINISHED' }
         target_coll = eval("bpy.data." + target)
         
-        num_deleted = 0
+        num_deleted = len([x for x in target_coll if item.users==0])
+        num_kept = len([x for x in target_coll if item.users==1])
         
         for item in target_coll:
             if item.users == 0:
                 target_coll.remove(item)
-                num_deleted += 1
         
-        msg = "Removed %d orphaned %s objects" % (num_deleted, target)
+        msg = "Removed %d orphaned %s objects. Kept %d non-orphans" % (num_deleted, target,
+                                                            num_kept)
         self.report( { 'INFO' }, msg  )
         return {'FINISHED'}
     
