@@ -22,9 +22,9 @@
 bl_info = {
     'name': 'Orphan Cleanup',
     'author': 'Phil Cote, cotejrp1, (http://www.blenderaddons.com)',
-    'version': (0,1),
-    "blender": (2, 5, 9),
-    "api": 35853,
+    'version': (0,2),
+    "blender": (2, 6, 0),
+    "api": 41098,
     'location': 'VIEW 3D -> TOOLS',
     'description': 'Deletes unused objects from the bpy.data modules',
     'warning': 'Know what it is you are deleting. Check datablocks view within outliner if there are any doubts!', # used for warning icon and text in addons panel
@@ -43,6 +43,9 @@ mod_data = [tuple(["actions"]*3), tuple(["armatures"]*3),
                  tuple(["node_groups"]*3), tuple(["objects"]*3),
                  tuple(["sounds"]*3), tuple(["texts"]*3), 
                  tuple(["textures"]*3),]
+
+if bpy.app.version[1] >= 60:
+    mod_data.append( tuple(["speakers"]*3), )
 
 
 class DeleteOrphansOp(bpy.types.Operator):
