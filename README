@@ -2,4 +2,5 @@ Orphan Slayer
 ===========
 A convenient tool for removing orphaned resources from your Blender project.
 
-
+Update: March 29
+Revised for Blender 2.62.  Fixed some stuff that was broken and added support for movie clips.
