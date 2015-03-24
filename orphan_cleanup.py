@@ -23,7 +23,7 @@ bl_info = {
     'name': 'Orphan Cleanup',
     'author': 'Phil Cote, cotejrp1, (http://www.blenderaddons.com)',
     'version': (0,2),
-    "blender": (2, 6, 2),
+    "blender": (2, 7, 3),
     'location': 'VIEW 3D -> TOOLS',
     'description': 'Deletes unused objects from the bpy.data modules',
     'warning': 'Know what it is you are deleting. Check datablocks view within outliner if there are any doubts!', # used for warning icon and text in addons panel
@@ -89,13 +89,13 @@ class OrphanCleanupPanel( bpy.types.Panel ):
     
 
 def register():
-    
-    screen_names = [ (screen.name, screen.name, screen.name ) 
-                        for screen in bpy.data.screens ]
-    bpy.types.Scene.screen_names = bpy.props.EnumProperty(name="Views",
-                            items=screen_names,
-                            description = "Possible views to delete"
-    )
+    #set_trace()
+    #screen_names = [ (screen.name, screen.name, screen.name ) 
+    #                    for screen in bpy.data.screens ]
+    #bpy.types.Scene.screen_names = bpy.props.EnumProperty(name="Views",
+    #                        items=screen_names,
+    #                        description = "Possible views to delete"
+    #)
     bpy.types.Scene.mod_list = bpy.props.EnumProperty(name="Target", 
                            items=mod_data, 
                            description="Module choice made for orphan deletion")
