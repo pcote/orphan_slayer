@@ -53,11 +53,9 @@ mod_data = [tuple(["actions"]*3),
             tuple(["objects"]*3),
             tuple(["particles"]*3),
             tuple(["sounds"]*3),
-            tuple(["shape_keys"]*3),
             tuple(["scenes"]*3),
             tuple(["texts"]*3),
             tuple(["textures"]*3),
-            tuple(["window_managers"]*3),
             tuple(["worlds"]*3),
 ]
 
