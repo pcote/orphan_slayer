@@ -23,7 +23,7 @@ bl_info = {
     'name': 'Orphan Cleanup',
     'author': 'Phil Cote, cotejrp1, (http://www.blenderaddons.com)',
     'version': (0,2),
-    "blender": (2, 7, 3),
+    "blender": (2, 7, 6),
     'location': 'VIEW 3D -> TOOLS',
     'description': 'Deletes unused objects from the bpy.data modules',
     'warning': 'Know what it is you are deleting. Check datablocks view within outliner if there are any doubts!', # used for warning icon and text in addons panel
@@ -31,17 +31,26 @@ bl_info = {
 
 import bpy, random, time
 
-mod_data = [tuple(["actions"]*3), tuple(["armatures"]*3), 
-                 tuple(["cameras"]*3), tuple(["curves"]*3),
-                 tuple(["fonts"]*3), tuple(["grease_pencil"]*3),
-                 tuple(["groups"]*3), tuple(["images"]*3),
-                 tuple(["lamps"]*3), tuple(["lattices"]*3),
-                 tuple(["libraries"]*3), tuple(["materials"]*3),
-                 tuple(["meshes"]*3), tuple(["metaballs"]*3),
-                 tuple(["movieclips"]*3),
-                 tuple(["node_groups"]*3), tuple(["objects"]*3),
-                 tuple(["sounds"]*3), tuple(["texts"]*3), 
-                 tuple(["textures"]*3),]
+mod_data = [tuple(["actions"]*3),
+            tuple(["armatures"]*3),
+            tuple(["cameras"]*3),
+            tuple(["curves"]*3),
+            tuple(["fonts"]*3),
+            tuple(["grease_pencil"]*3),
+            tuple(["groups"]*3),
+            tuple(["images"]*3),
+            tuple(["lamps"]*3),
+            tuple(["lattices"]*3),
+            tuple(["libraries"]*3),
+            tuple(["materials"]*3),
+            tuple(["meshes"]*3),
+            tuple(["metaballs"]*3),
+            tuple(["movieclips"]*3),
+            tuple(["node_groups"]*3),
+            tuple(["objects"]*3),
+            tuple(["sounds"]*3),
+            tuple(["texts"]*3),
+            tuple(["textures"]*3),]
 
 if bpy.app.version[1] >= 60:
     mod_data.append( tuple(["speakers"]*3), )
