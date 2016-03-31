@@ -54,13 +54,12 @@ mod_data = [tuple(["actions"]*3),
             tuple(["particles"]*3),
             tuple(["sounds"]*3),
             tuple(["scenes"]*3),
+            tuple(["speakers"]*3),
             tuple(["texts"]*3),
             tuple(["textures"]*3),
             tuple(["worlds"]*3),
 ]
 
-if bpy.app.version[1] >= 60:
-    mod_data.append( tuple(["speakers"]*3), )
 
 
 class DeleteOrphansOp(bpy.types.Operator):
