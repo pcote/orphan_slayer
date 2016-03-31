@@ -33,6 +33,7 @@ import bpy, random, time
 
 mod_data = [tuple(["actions"]*3),
             tuple(["armatures"]*3),
+            tuple(["brushes"]*3),
             tuple(["cameras"]*3),
             tuple(["curves"]*3),
             tuple(["fonts"]*3),
@@ -42,15 +43,23 @@ mod_data = [tuple(["actions"]*3),
             tuple(["lamps"]*3),
             tuple(["lattices"]*3),
             tuple(["libraries"]*3),
+            tuple(["linestyles"]*3),
             tuple(["materials"]*3),
+            tuple(["masks"]*3),
             tuple(["meshes"]*3),
             tuple(["metaballs"]*3),
             tuple(["movieclips"]*3),
             tuple(["node_groups"]*3),
             tuple(["objects"]*3),
+            tuple(["particles"]*3),
             tuple(["sounds"]*3),
+            tuple(["shape_keys"]*3),
+            tuple(["scenes"]*3),
             tuple(["texts"]*3),
-            tuple(["textures"]*3),]
+            tuple(["textures"]*3),
+            tuple(["window_managers"]*3),
+            tuple(["worlds"]*3),
+]
 
 if bpy.app.version[1] >= 60:
     mod_data.append( tuple(["speakers"]*3), )
