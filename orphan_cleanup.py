@@ -29,6 +29,14 @@ bl_info = {
     'warning': 'Know what it is you are deleting. Check datablocks view within outliner if there are any doubts!', # used for warning icon and text in addons panel
     'category': 'System'}
 
+"""
+Special note on image removal.
+It's not necessary to save into a new file in order to remove images.
+Shift-click the X in the image list in the UV editor.  That should unlink and thus
+orphan them.  From there, you can use this tool to get rid of the images just like
+you would any other resource.
+"""
+
 import bpy, random, time
 
 mod_data = [tuple(["actions"]*3),
