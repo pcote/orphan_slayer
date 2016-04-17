@@ -38,6 +38,8 @@ you would any other resource.
 """
 
 import bpy, random, time
+from collections import namedtuple
+
 
 mod_data = [tuple(["actions"]*3),
             tuple(["armatures"]*3),
@@ -66,6 +68,7 @@ mod_data = [tuple(["actions"]*3),
             tuple(["texts"]*3),
             tuple(["textures"]*3),
             tuple(["worlds"]*3),
+            tuple(["everything"]*3),
 ]
 
 
@@ -75,16 +78,22 @@ class DeleteOrphansOp(bpy.types.Operator):
     bl_idname="ba.delete_data_obs"
     bl_label="Delete Orphans"
     
-    def execute(self, context):
+    def execute(self, context):    
+        
         target = context.scene.mod_list
-        target_coll = eval("bpy.data." + target)
         
-        num_deleted = len([x for x in target_coll if x.users==0])
-        num_kept = len([x for x in target_coll if x.users==1])
+        if target == "everything":
+            msg = "Option to delete everything not yet implemented"
+            self.report( {"ERROR"}, msg)
+            return {"FINISHED"}
+        else:
+            target_coll = eval("bpy.data." + target)
+            num_deleted = len([x for x in target_coll if x.users==0])
+            num_kept = len([x for x in target_coll if x.users==1])
         
-        for item in target_coll:
-            if item.users == 0:
-                target_coll.remove(item)
+            for item in target_coll:
+                if item.users == 0:
+                    target_coll.remove(item)
         
         msg = "Removed %d orphaned %s objects. Kept %d non-orphans" % (num_deleted, target,
                                                             num_kept)
