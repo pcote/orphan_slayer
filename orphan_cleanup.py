@@ -81,6 +81,8 @@ class DeleteOrphansOp(bpy.types.Operator):
     def execute(self, context):    
         
         target = context.scene.mod_list
+        every_block_name = [list(x)[0] for x in bpy.types.Scene.mod_list[1]["items"] 
+                        if list(x)[0] != "everything"]
         
         def _delete_orphans(target_coll):
             DeletionStats = namedtuple("DeletionStats", ["num_deleted", "num_kept"])
@@ -93,10 +95,14 @@ class DeleteOrphansOp(bpy.types.Operator):
 
             return DeletionStats(num_deleted, num_kept)
 
+        num_deleted, num_kept = 0, 0
         if target == "everything":
-            msg = "Option to delete everything not yet implemented"
-            self.report( {"ERROR"}, msg)
-            return {"FINISHED"}
+            for block_name in every_block_name:
+                target_coll = eval("bpy.data.{}".format(block_name))
+                deleted, kept = _delete_orphans(target_coll)
+                num_deleted += deleted
+                num_kept += kept
+
         else:
             target_coll = eval("bpy.data." + target)
             num_deleted, num_kept = _delete_orphans(target_coll)
